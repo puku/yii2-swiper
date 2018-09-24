@@ -1,8 +1,9 @@
 <?php
+
 namespace romkaChev\yii2\swiper;
 
 use romkaChev\yii2\swiper\helpers\SwiperCssHelper;
-use yii\base\Object;
+use yii\base\BaseObject;
 use yii\helpers\ArrayHelper;
 
 /**
@@ -12,9 +13,8 @@ use yii\helpers\ArrayHelper;
  *
  * @package romkaChev\yii2\swiper
  */
-class Slide extends Object
+class Slide extends BaseObject
 {
-
     /**
      * @see \romkaChev\yii2\swiper\Slide::$content
      */
@@ -52,7 +52,7 @@ class Slide extends Object
      * @see \romkaChev\yii2\swiper\Slide::$background
      * @see \romkaChev\yii2\swiper\Slide::$hash
      */
-    public $options = [ ];
+    public $options = [];
 
     /**
      * @param string|mixed[] $config the configuration of [[\romkaChev\yii2\swiper\Slide]]
@@ -82,20 +82,19 @@ class Slide extends Object
      * @see \romkaChev\yii2\swiper\Slide::$hash
      * @see \romkaChev\yii2\swiper\Slide::$content
      */
-    public function __construct( $config = [ ] )
+    public function __construct($config = [])
     {
-
-        $config = is_string( $config )
-            ? [ self::CONTENT => $config ]
+        $config = is_string($config)
+            ? [self::CONTENT => $config]
             : $config;
 
-        $config[self::CONTENT] = ArrayHelper::getValue( $config, self::CONTENT, null );
+        $config[self::CONTENT] = ArrayHelper::getValue($config, self::CONTENT, null);
 
-        $config[self::CONTENT] = is_array( $config[self::CONTENT] )
-            ? implode( '', $config[self::CONTENT] )
+        $config[self::CONTENT] = is_array($config[self::CONTENT])
+            ? implode('', $config[self::CONTENT])
             : $config[self::CONTENT];
 
-        parent::__construct( $config );
+        parent::__construct($config);
     }
 
     /**
@@ -112,20 +111,20 @@ class Slide extends Object
      */
     protected function normalizeOptions()
     {
-        $this->options['data']  = ArrayHelper::getValue( $this->options, 'data', [ ] );
-        $this->options['style'] = ArrayHelper::getValue( $this->options, 'style', '' );
+        $this->options['data'] = ArrayHelper::getValue($this->options, 'data', []);
+        $this->options['style'] = ArrayHelper::getValue($this->options, 'style', '');
 
-        $this->options['data']['hash'] = $this->hash ?: ArrayHelper::getValue( $this->options['data'], 'hash', null );
-        $this->hash                    = $this->hash ?: ArrayHelper::getValue( $this->options['data'], 'hash', null );
+        $this->options['data']['hash'] = $this->hash ?: ArrayHelper::getValue($this->options['data'], 'hash', null);
+        $this->hash = $this->hash ?: ArrayHelper::getValue($this->options['data'], 'hash', null);
 
         if ($this->background) {
 
             $this->options['style'] = SwiperCssHelper::mergeStyleAndBackground(
                 $this->background,
-                ArrayHelper::getValue( $this->options, 'style', '' )
+                ArrayHelper::getValue($this->options, 'style', '')
             );
 
-        } elseif (ArrayHelper::getValue( $this->options, 'style' )) {
+        } elseif (ArrayHelper::getValue($this->options, 'style')) {
 
             $this->background = SwiperCssHelper::getBackgroundUrl(
                 $this->options['style']
@@ -133,8 +132,8 @@ class Slide extends Object
 
         }
 
-        $this->options         = array_filter( $this->options );
-        $this->options['data'] = array_filter( $this->options['data'] );
+        $this->options = array_filter($this->options);
+        $this->options['data'] = array_filter($this->options['data']);
     }
 
 }
